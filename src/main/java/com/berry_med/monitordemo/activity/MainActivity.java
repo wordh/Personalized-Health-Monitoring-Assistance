@@ -3,6 +3,7 @@ package com.berry_med.monitordemo.activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.SurfaceView;
@@ -22,12 +23,21 @@ import com.berry_med.monitordemo.dialog.BluetoothDeviceAdapter;
 import com.berry_med.monitordemo.dialog.SearchDevicesDialog;
 import com.berry_med.monitordemo.waveform.WaveForm;
 import com.berry_med.monitordemo.waveform.WaveFormParams;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements BTController.Listener, DataParser.onPackageReceivedListener{
+public class MainActivity extends AppCompatActivity implements BTController.Listener, DataParser.onPackageReceivedListener, View.OnClickListener{
+
+    //firebase auth object
+    private FirebaseAuth firebaseAuth;
+
+    //view objects
+    private TextView textViewUserEmail;
+    private Button buttonLogout;
 
     private BTController mBtController;
 
@@ -62,7 +72,34 @@ public class MainActivity extends AppCompatActivity implements BTController.List
         setContentView(R.layout.activity_main);
         initData();
         initView();
+
+        //initializing firebase authentication object
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        //if the user is not logged in
+        //that means current user will return null
+        if(firebaseAuth.getCurrentUser() == null){
+            //closing this activity
+            finish();
+            //starting login activity
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+
+        //getting current user
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        //initializing views
+        textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
+        buttonLogout = (Button) findViewById(R.id.logout);
+
+        //displaying logged in user name
+        textViewUserEmail.setText("Welcome "+user.getEmail());
+
+        //adding listener to button
+        buttonLogout.setOnClickListener(this);
     }
+
+
 
 
     private void initData() {
@@ -152,6 +189,16 @@ public class MainActivity extends AppCompatActivity implements BTController.List
             case R.id.btnNIBPStop:
                 mBtController.write(DataParser.CMD_STOP_NIBP);
                 break;
+        }
+
+        //if logout is pressed
+        if(v == buttonLogout){
+            //logging out the user
+            firebaseAuth.signOut();
+            //closing activity
+            finish();
+            //starting login activity
+            startActivity(new Intent(this, LoginActivity.class));
         }
     }
 
