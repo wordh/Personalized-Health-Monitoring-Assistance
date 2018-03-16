@@ -16,10 +16,14 @@ public class SpO2 {
         SpO2 = spO2;
         this.pulseRate = pulseRate;
         this.status = status;
+
     }
 
     public int getSpO2() {
+        AllValues av = new AllValues();
+        av.setSpO2(SpO2);
         return SpO2;
+
     }
 
     public void setSpO2(int spO2) {
@@ -27,6 +31,8 @@ public class SpO2 {
     }
 
     public int getPulseRate() {
+        AllValues av = new AllValues();
+        av.setPulseRate(pulseRate);
         return pulseRate;
     }
 

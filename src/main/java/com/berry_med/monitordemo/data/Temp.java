@@ -14,9 +14,12 @@ public class Temp {
     public Temp(double temperature, int status) {
         this.temperature = temperature;
         this.status = status;
+
     }
 
     public double getTemperature() {
+        AllValues av = new AllValues();
+        av.setTemperature(temperature);
         return temperature;
     }
 

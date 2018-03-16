@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.berry_med.monitordemo.R;
 import com.berry_med.monitordemo.bluetooth.BTController;
+import com.berry_med.monitordemo.data.AllValues;
 import com.berry_med.monitordemo.data.DataParser;
 import com.berry_med.monitordemo.data.ECG;
 import com.berry_med.monitordemo.data.NIBP;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements BTController.List
     private WaveForm wfSpO2;
     private WaveForm wfECG;
 
+    AllValues av = new AllValues();
 
     //Bluetooth
     BluetoothDeviceAdapter     mBluetoothDeviceAdapter;
@@ -294,8 +296,11 @@ public class MainActivity extends AppCompatActivity implements BTController.List
             }
         });
 
+        av.setSpO2(spo2.getSpO2());
+        av.setPulseRate(spo2.getPulseRate());
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        databaseReference.child(user.getUid()).setValue(spo2);
+        databaseReference.child(user.getUid()).setValue(av);
+
     }
 
     @Override
@@ -309,12 +314,15 @@ public class MainActivity extends AppCompatActivity implements BTController.List
             @Override
             public void run() {
                 tvECGinfo.setText(ecg.toString());
-                
+
             }
         });
 
+        av.setHeartRate(ecg.getHeartRate());
+        av.setRestRate(ecg.getRestRate());
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        databaseReference.child(user.getUid()).setValue(ecg);
+        databaseReference.child(user.getUid()).setValue(av);
+
     }
 
     @Override
@@ -325,8 +333,11 @@ public class MainActivity extends AppCompatActivity implements BTController.List
                 tvTEMPinfo.setText(temp.toString());
             }
         });
+        
+        av.setTemperature(temp.getTemperature());
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        databaseReference.child(user.getUid()).setValue(temp);
+        databaseReference.child(user.getUid()).setValue(av);
+
     }
 
     @Override
@@ -337,8 +348,12 @@ public class MainActivity extends AppCompatActivity implements BTController.List
                 tvNIBPinfo.setText(nibp.toString());
             }
         });
+
+        av.setHighPressure(nibp.getHighPressure());
+        av.setLowPressure(nibp.getLowPressure());
+        av.setMeanPressure(nibp.getMeanPressure());
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        databaseReference.child(user.getUid()).setValue(nibp);
+        databaseReference.child(user.getUid()).setValue(av);
     }
 
     @Override

@@ -20,17 +20,24 @@ public class NIBP {
         this.lowPressure = lowPressure;
         this.cuffPressure = cuffPressure;
         this.status = status;
+
     }
 
     public int getMeanPressure() {
+        AllValues av = new AllValues();
+        av.setMeanPressure(meanPressure);
         return meanPressure;
     }
 
     public int getHighPressure() {
+        AllValues av = new AllValues();
+        av.setHighPressure(highPressure);
         return highPressure;
     }
 
     public int getLowPressure() {
+        AllValues av = new AllValues();
+        av.setLowPressure(lowPressure);
         return lowPressure;
     }
 

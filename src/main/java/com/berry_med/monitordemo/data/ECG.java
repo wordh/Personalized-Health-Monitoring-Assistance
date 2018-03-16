@@ -16,13 +16,18 @@ public class ECG {
         this.heartRate = heartRate;
         this.restRate = restRate;
         this.status = status;
+
     }
 
     public int getHeartRate() {
+        AllValues av = new AllValues();
+        av.setHeartRate(heartRate);
         return heartRate;
     }
 
     public int getRestRate() {
+        AllValues av = new AllValues();
+        av.setRestRate(restRate);
         return restRate;
     }
 
