@@ -25,6 +25,9 @@ import com.berry_med.monitordemo.waveform.WaveForm;
 import com.berry_med.monitordemo.waveform.WaveFormParams;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -34,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements BTController.List
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
+
+    //firebase database reference
+    private DatabaseReference databaseReference;
 
     //view objects
     private TextView textViewUserEmail;
@@ -84,6 +90,9 @@ public class MainActivity extends AppCompatActivity implements BTController.List
             //starting login activity
             startActivity(new Intent(this, LoginActivity.class));
         }
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
 
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -272,6 +281,8 @@ public class MainActivity extends AppCompatActivity implements BTController.List
     @Override
     public void onSpO2WaveReceived(int dat) {
         wfSpO2.add(dat);
+
+
     }
 
     @Override
@@ -282,6 +293,9 @@ public class MainActivity extends AppCompatActivity implements BTController.List
                 tvSPO2info.setText(spo2.toString());
             }
         });
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseReference.child(user.getUid()).setValue(spo2);
     }
 
     @Override
@@ -295,8 +309,12 @@ public class MainActivity extends AppCompatActivity implements BTController.List
             @Override
             public void run() {
                 tvECGinfo.setText(ecg.toString());
+                
             }
         });
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseReference.child(user.getUid()).setValue(ecg);
     }
 
     @Override
@@ -307,6 +325,8 @@ public class MainActivity extends AppCompatActivity implements BTController.List
                 tvTEMPinfo.setText(temp.toString());
             }
         });
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseReference.child(user.getUid()).setValue(temp);
     }
 
     @Override
@@ -317,6 +337,8 @@ public class MainActivity extends AppCompatActivity implements BTController.List
                 tvNIBPinfo.setText(nibp.toString());
             }
         });
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseReference.child(user.getUid()).setValue(nibp);
     }
 
     @Override

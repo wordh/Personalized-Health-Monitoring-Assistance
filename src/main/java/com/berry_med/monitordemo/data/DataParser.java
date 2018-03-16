@@ -6,7 +6,7 @@ import android.util.Log;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * Created by ZXX on 2016/1/8.
+ * Created by Wordh on 2018/3/07.
  */
 public class DataParser {
 
