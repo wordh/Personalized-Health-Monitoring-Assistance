@@ -32,6 +32,28 @@
         <include layout="@layout/layout_spo2"/>      <!--SPO2-->
         <include layout="@layout/layout_temp"/>      <!--TEMP-->
         <include layout="@layout/layout_nibp"/>      <!--NIBP-->
+        <EditText
+            android:id="@+id/NameField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name" />
+
+        <EditText
+            android:id="@+id/ageField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:text="age" />
+
+        <Button
+            android:id="@+id/setNameAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SET Name and Age" />
+
         <include layout="@layout/layout_about"/>
 
         <Button

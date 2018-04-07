@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements BTController.List
     //view objects
     private TextView textViewUserEmail;
     private Button buttonLogout;
+    private Button buttonSetName;
+    private EditText name;
+    private EditText age;
 
     private BTController mBtController;
 
@@ -102,12 +106,18 @@ public class MainActivity extends AppCompatActivity implements BTController.List
         //initializing views
         textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
         buttonLogout = (Button) findViewById(R.id.logout);
+        buttonSetName = (Button) findViewById(R.id.setNameAge);
+        name=(EditText) findViewById(R.id.NameField);
+        age=(EditText) findViewById(R.id.ageField);
 
         //displaying logged in user name
         textViewUserEmail.setText("Welcome "+user.getEmail());
 
         //adding listener to button
         buttonLogout.setOnClickListener(this);
+        buttonSetName.setOnClickListener(this);
+        name.setText(av.getName());
+        age.setText(av.getAge());
     }
 
 
@@ -211,6 +221,15 @@ public class MainActivity extends AppCompatActivity implements BTController.List
             //starting login activity
             startActivity(new Intent(this, LoginActivity.class));
         }
+        if(v==buttonSetName){
+            String naam =(String)name.getText().toString().trim();
+            av.setName(naam);
+            String boyosh =(String) age.getText().toString().trim();
+            av.setAge(boyosh);
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            //databaseReference.child(user.getUid()).setValue(av);
+            databaseReference.child("Users").child(user.getUid()).setValue(av);
+        }
     }
 
     @Override
@@ -299,8 +318,8 @@ public class MainActivity extends AppCompatActivity implements BTController.List
         av.setSpO2(spo2.getSpO2());
         av.setPulseRate(spo2.getPulseRate());
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        databaseReference.child(user.getUid()).setValue(av);
-
+        //databaseReference.child(user.getUid()).setValue(av);
+        databaseReference.child("Users").child(user.getUid()).setValue(av);
     }
 
     @Override
@@ -321,8 +340,8 @@ public class MainActivity extends AppCompatActivity implements BTController.List
         av.setHeartRate(ecg.getHeartRate());
         av.setRestRate(ecg.getRestRate());
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        databaseReference.child(user.getUid()).setValue(av);
-
+        //databaseReference.child(user.getUid()).setValue(av);
+        databaseReference.child("Users").child(user.getUid()).setValue(av);
     }
 
     @Override
@@ -333,11 +352,11 @@ public class MainActivity extends AppCompatActivity implements BTController.List
                 tvTEMPinfo.setText(temp.toString());
             }
         });
-        
+
         av.setTemperature(temp.getTemperature());
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        databaseReference.child(user.getUid()).setValue(av);
-
+        //databaseReference.child(user.getUid()).setValue(av);
+        databaseReference.child("Users").child(user.getUid()).setValue(av);
     }
 
     @Override
@@ -353,7 +372,7 @@ public class MainActivity extends AppCompatActivity implements BTController.List
         av.setLowPressure(nibp.getLowPressure());
         av.setMeanPressure(nibp.getMeanPressure());
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        databaseReference.child(user.getUid()).setValue(av);
+        databaseReference.child("Users").child(user.getUid()).setValue(av);
     }
 
     @Override

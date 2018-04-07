@@ -5,6 +5,9 @@ package com.berry_med.monitordemo.data;
  */
 
 public class AllValues {
+
+    private String name;
+    private String age;
     private int heartRate;
     private int restRate;
     private int highPressure;
@@ -13,6 +16,22 @@ public class AllValues {
     private int SpO2;
     private int pulseRate;
     private double temperature;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name1) {
+        this.name = name1;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String heartRate) {
+        this.age = heartRate;
+    }
 
     public int getHeartRate() {
         return heartRate;
