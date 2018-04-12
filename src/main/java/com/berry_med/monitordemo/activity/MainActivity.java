@@ -116,8 +116,8 @@ public class MainActivity extends AppCompatActivity implements BTController.List
         //adding listener to button
         buttonLogout.setOnClickListener(this);
         buttonSetName.setOnClickListener(this);
-        //av.setAge(databaseReference.child("Users").child(user.getUid()).child("age").getKey());
-        //av.setName(databaseReference.child("Users").child(user.getUid()).child("name").getKey());
+        av.setAge("");
+        av.setName("");
         name.setText(av.getName());
         age.setText(av.getAge());
     }
