@@ -16,7 +16,25 @@ public class AllValues {
     private int SpO2;
     private int pulseRate;
     private double temperature;
+    private int ecgStatus;
+    private int pulseStatus;
 
+
+    public int getEcgStatus() {
+        return ecgStatus;
+    }
+
+    public void setEcgStatus(int ecgStatus) {
+        this.ecgStatus = ecgStatus;
+    }
+
+    public int getPulseStatus() {
+        return pulseStatus;
+    }
+
+    public void setPulseStatus(int pulseStatus) {
+        this.pulseStatus = pulseStatus;
+    }
     public String getName() {
         return name;
     }

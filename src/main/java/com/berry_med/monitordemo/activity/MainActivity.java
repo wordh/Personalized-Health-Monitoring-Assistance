@@ -116,6 +116,8 @@ public class MainActivity extends AppCompatActivity implements BTController.List
         //adding listener to button
         buttonLogout.setOnClickListener(this);
         buttonSetName.setOnClickListener(this);
+        //av.setAge(databaseReference.child("Users").child(user.getUid()).child("age").getKey());
+        //av.setName(databaseReference.child("Users").child(user.getUid()).child("name").getKey());
         name.setText(av.getName());
         age.setText(av.getAge());
     }
@@ -302,8 +304,9 @@ public class MainActivity extends AppCompatActivity implements BTController.List
     @Override
     public void onSpO2WaveReceived(int dat) {
         wfSpO2.add(dat);
-
-
+        av.setPulseStatus(dat);
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseReference.child("Users").child(user.getUid()).setValue(av);
     }
 
     @Override
@@ -325,6 +328,9 @@ public class MainActivity extends AppCompatActivity implements BTController.List
     @Override
     public void onECGWaveReceived(int dat) {
         wfECG.add(dat);
+        av.setEcgStatus(dat);
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseReference.child("Users").child(user.getUid()).setValue(av);
     }
 
     @Override
